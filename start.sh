@@ -54,7 +54,7 @@ elif [ "$SYMFONY_ENV" == "test" ]; then
 	echo "Env "$SYMFONY_ENV
 else
 	echo "Env "$SYMFONY_ENV
-	php5dismod xdebug
+	phpdismod xdebug
 fi
 
 
