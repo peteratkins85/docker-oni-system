@@ -3,8 +3,8 @@ MAINTAINER Jean-Avit Promis "docker@katagena.com"
 LABEL org.label-schema.vcs-url="https://github.com/nouchka/docker-symfony"
 LABEL version="7.0"
 
-ARG PHPVERSION=7.0 \
-	PHPCONF=/etc/php/7.0
+ARG PHPVERSION=7.0
+ARG PHPCONF=/etc/php/7.0
 
 ENV SYMFONY_ENV=prod \
 	SYMFONY_DIRECTORY=/var/www/
