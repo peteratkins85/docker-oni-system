@@ -16,9 +16,6 @@ ENV APACHE_RUN_USER=www-data \
 	APACHE_RUN_DIR=/var/run/apache2 \
 	APACHE_PID_FILE=/var/run/apache2/apache2.pid
 
-ENV PHPVERSION 7.0
-ENV PHPCONF /etc/php/7.0
-
 RUN apt-get update && \
 	DEBIAN_FRONTEND=noninteractive apt-get -yq install php${PHPVERSION}-mysql php${PHPVERSION}-redis php${PHPVERSION} php${PHPVERSION}-cli php${PHPVERSION}-curl curl git apache2 libapache2-mod-php${PHPVERSION} php${PHPVERSION}-gd imagemagick php${PHPVERSION}-imagick php${PHPVERSION}-intl php${PHPVERSION}-mcrypt php${PHPVERSION}-xdebug php${PHPVERSION}-apcu memcached php${PHPVERSION}-memcached && \
 	apt-get -yq install php${PHPVERSION}-xml zip && \
