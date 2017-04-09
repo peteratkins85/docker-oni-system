@@ -36,6 +36,7 @@ RUN curl -LsS https://phar.phpunit.de/phpunit.phar  -o /usr/local/bin/phpunit &&
 
 ##Apache
 RUN a2enmod rewrite && \
+	a2enmod macro && \
 	a2dissite 000-default && \
 	usermod -u 1000 www-data && \
 	groupmod -g 1000 www-data && \
