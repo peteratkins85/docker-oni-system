@@ -5,7 +5,7 @@
 ##Generate apache conf with secrets from docker
 APACHE_SECRETS_CONF_FILE="/etc/apache2/conf-enabled/secrets.conf"
 [ ! -f "$APACHE_SECRETS_CONF_FILE" ] || rm -f $APACHE_SECRETS_CONF_FILE
-find /var/run/secrets/ -type f| while read secret
+find /run/secrets/ -type f| while read secret
 do
 	name=`basename $secret`
 	value=`cat $secret`
