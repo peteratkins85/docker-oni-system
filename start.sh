@@ -2,6 +2,16 @@
 
 [ ! -f "$APACHE_PID_FILE" ] || rm -f $APACHE_PID_FILE
 
+##Generate apache conf with secrets from docker
+APACHE_SECRETS_CONF_FILE="/etc/apache2/conf-enabled/secrets.conf"
+[ ! -f "$APACHE_SECRETS_CONF_FILE" ] || rm -f $APACHE_SECRETS_CONF_FILE
+find /var/run/secrets/ -type f| while read secret
+do
+	name=`basename $secret`
+	value=`cat $secret`
+	echo "SetEnv $name $value" >> /etc/apache2/conf-enabled/secrets.conf
+done
+
 initSf () {
 	CURRENT_DIR=`dirname $SYMFONY_DIRECTORY/$1`
 	cd $CURRENT_DIR
