@@ -17,7 +17,7 @@ ENV APACHE_RUN_USER=www-data \
 	APACHE_PID_FILE=/var/run/apache2/apache2.pid
 
 RUN apt-get update && \
-	DEBIAN_FRONTEND=noninteractive apt-get -yq install php-memcache php${PHPVERSION}-mysql php${PHPVERSION}-redis php${PHPVERSION} php${PHPVERSION}-pdo-sqlite php${PHPVERSION}-cli php${PHPVERSION}-curl curl git apache2 libapache2-mod-php${PHPVERSION} php${PHPVERSION}-gd imagemagick php${PHPVERSION}-imagick php${PHPVERSION}-intl php${PHPVERSION}-mcrypt php${PHPVERSION}-xdebug php${PHPVERSION}-apcu memcached php${PHPVERSION}-memcached && \
+	DEBIAN_FRONTEND=noninteractive apt-get -yq install libnghttp2-dev php-memcache php${PHPVERSION}-mysql php${PHPVERSION}-redis php${PHPVERSION} php${PHPVERSION}-pdo-sqlite php${PHPVERSION}-cli php${PHPVERSION}-curl curl git apache2 libapache2-mod-php${PHPVERSION} php${PHPVERSION}-gd imagemagick php${PHPVERSION}-imagick php${PHPVERSION}-intl php${PHPVERSION}-mcrypt php${PHPVERSION}-xdebug php${PHPVERSION}-apcu memcached php${PHPVERSION}-memcached && \
 	apt-get -yq install php${PHPVERSION}-xml php${PHPVERSION}-mbstring zip librsvg2-2 && \
 	rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
@@ -37,6 +37,7 @@ RUN curl -LsS https://phar.phpunit.de/phpunit.phar  -o /usr/local/bin/phpunit &&
 ##Apache
 RUN a2enmod rewrite && \
 	a2enmod macro && \
+##	a2enmod http2 && \
 	a2dissite 000-default && \
 	usermod -u 1000 www-data && \
 	groupmod -g 1000 www-data && \
