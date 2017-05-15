@@ -5,12 +5,12 @@ networks:
     driver: bridge
     ipam:
       config:
-      - subnet: 172.10.0.0/16
-        gateway: 172.10.5.254
+      - subnet: 142.10.0.0/16
+        gateway: 142.10.5.254
         aux_addresses:
-          symfony: 172.10.1.2
-          mysql-server: 172.10.1.3
-          redis-server: 172.10.1.4
+          symfony: 142.10.1.2
+          mysql-server: 142.10.1.3
+          redis-server: 142.10.1.4
 
 services:
     symfony:
@@ -19,7 +19,7 @@ services:
         image: oni-system:latest
         container_name: "oni-system"
         ports:
-            - "8080:80"
+            - "8090:80"
         networks:
             - oni
         environment:
@@ -36,7 +36,7 @@ services:
         image: mysql
         container_name: "oni-mysql"
         ports:
-            - 3307:3306
+            - 3311:3306
         volumes:
             - oni-mysql:/var/lib/mysql
         networks:
@@ -49,7 +49,7 @@ services:
     redis:
         image: redis
         ports:
-            - 6378:6379
+            - 6399:6379
         networks:
             - oni
 
