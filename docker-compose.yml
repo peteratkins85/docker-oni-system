@@ -1,23 +1,57 @@
 version: '2'
 
+networks:
+  oni:
+    driver: bridge
+    ipam:
+      config:
+      - subnet: 172.10.0.0/16
+        gateway: 172.10.5.254
+        aux_addresses:
+          symfony: 172.10.1.2
+          mysql-server: 172.10.1.3
+          redis-server: 172.10.1.4
+
 services:
-  symfony:
-    image: nouchka/symfony:5
-    container_name: "symfony"
-    ports:
-      - "8080:80"
-    environment:
-      - SYMFONY_ENV=prod
-      - SYMFONY_DIRECTORY=/var/www
-      - SYMFONY_INIT_site1=True
-      - SYMFONY_PREV_site1=./init.sh
-      - SYMFONY_POST_site2=./launch.sh
-    volumes:
-      - ./samples/site1/001-vhost:/etc/apache2/sites-enabled/001-vhost
-      - ./samples/site1:/var/www/site1
-      - ./samples/site2:/var/www/site2
-      - composer:/var/www/.composer
+    symfony:
+        build:
+            context: .
+        image: oni-system:latest
+        container_name: "oni-system"
+        ports:
+            - "8080:80"
+        networks:
+            - oni
+        environment:
+            - SYMFONY_ENV=dev
+            - SYMFONY_DIRECTORY=/var/www
+            - SYMFONY_INIT_site1=True
+            - SYMFONY_PREV_site1=./init.sh
+        volumes:
+            - ~/web/oniSystem:/var/www/oniSystem
+            - ./composer:/var/www/.composer
+        links:
+            - mysql-server
+    mysql-server:
+        image: mysql
+        container_name: "oni-mysql"
+        ports:
+            - 3307:3306
+        volumes:
+            - oni-mysql:/var/lib/mysql
+        networks:
+            - oni
+        environment:
+            - MYSQL_DATABASE=oni-system
+            - MYSQL_ROOT_PASSWORD=root
+            - MYSQL_USER=oni
+            - MYSQL_PASSWORD=password
+    redis:
+        image: redis
+        ports:
+            - 6378:6379
+        networks:
+            - oni
 
 volumes:
-  composer:
-    driver: local
+  oni-mysql:
